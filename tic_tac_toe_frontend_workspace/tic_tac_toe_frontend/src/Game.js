@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Board from './Board';
 
-// Color constants from the provided palette, fallback to CSS variables if desired
-const PRIMARY = '#1976d2';
-const SECONDARY = '#9c27b0';
-const ACCENT = '#fbc02d';
+/* All colors sourced via CSS variables for consistency with blue theme */
+const PRIMARY = 'var(--primary-blue)';
+const PRIMARY_HOVER = 'var(--primary-blue-dark)';
+const ACCENT = 'var(--accent-blue)';
+const WIN_HIGHLIGHT = 'var(--win-highlight)';
 
 // Util: check winner
 // PUBLIC_INTERFACE
@@ -83,21 +84,30 @@ function Game() {
       background: 'var(--bg-secondary)',
       padding: '2rem',
       borderRadius: '1.5rem',
-      boxShadow: '0 6px 36px rgba(50,50,93,0.07), 0 1.5px 6px rgba(0,0,0,0.05)',
+      boxShadow: 'var(--blue-shadow)',
       maxWidth: 360,
       margin: 'auto'
     }}>
       <h2 style={{
-        color: PRIMARY, marginBottom: '1rem', fontWeight: 700, letterSpacing: 1.2
+        color: 'var(--primary-blue)',
+        marginBottom: '1rem',
+        fontWeight: 700,
+        letterSpacing: 1.2,
+        textShadow: '0 1px 12px var(--accent-highlight)'
       }}>
         Tic-Tac-Toe
       </h2>
-      <div className="game-status"
+      <div
+        className="game-status"
         style={{
           fontSize: '1.12rem',
           fontWeight: 600,
           margin: '10px 0 15px 0',
-          color: winner ? ACCENT : (draw ? SECONDARY : PRIMARY)
+          color: winner ? 'var(--primary-blue-dark)'
+                : (draw ? 'var(--primary-blue-mid)' : 'var(--primary-blue)'),
+          background: winner ? 'var(--win-highlight)' : 'transparent',
+          borderRadius: 6,
+          padding: '3px 8px'
         }}>
         {status}
       </div>
@@ -113,24 +123,26 @@ function Game() {
         style={{
           marginTop: 24,
           padding: '10px 28px',
-          backgroundColor: SECONDARY,
-          color: '#fff',
-          fontWeight: 500,
-          fontSize: '1rem',
+          backgroundColor: 'var(--primary-blue)',
+          color: 'var(--button-text)',
+          fontWeight: 600,
+          fontSize: '1.07rem',
           border: 'none',
           borderRadius: 8,
           cursor: 'pointer',
-          transition: 'background 0.2s',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+          transition: 'background 0.2s, box-shadow 0.17s, color 0.12s',
+          boxShadow: '0 2px 10px rgba(25,118,210,0.06)'
         }}
+        onMouseOver={e => e.currentTarget.style.backgroundColor = 'var(--button-bg-hover)'}
+        onMouseOut={e => e.currentTarget.style.backgroundColor = 'var(--primary-blue)'}
         onClick={handleReset}
       >
         Reset Game
       </button>
       <footer style={{
         marginTop: '2.2rem',
-        color: '#888',
-        fontSize: '0.96rem'
+        color: 'var(--primary-blue-mid)',
+        fontSize: '0.97rem'
       }}>
         <span role="img" aria-label="sparkle">✨</span> Modern Two-Player Game
       </footer>
